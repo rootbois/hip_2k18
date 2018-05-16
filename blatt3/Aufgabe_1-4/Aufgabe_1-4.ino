@@ -1,15 +1,4 @@
 #include <LiquidCrystal.h>
-<<<<<<< HEAD
-LiquidCrystal lcd(3, 4, 6, 7, 8, 9);
-
-void setup() {
-  // put your setup code here, to run once:
-  pinMode(11, OUTPUT);
-  lcd.begin(2, 8);
-}
-
-// Aufgabe 1
-=======
 
 int c;
 
@@ -26,8 +15,12 @@ int c;
 // Define the LCD screen
 LiquidCrystal lcd(R_S, E, DB4, DB5, DB6, DB7);
 
->>>>>>> 68c239a9932c15ce085026c5bc3941e1fd53e2b3
+// Aufgabe 1
 void setPin11(bool high) {
+  // setPin11() requires 125 milliseconds
+  // setPin11Asm() requires 125 milliseconds
+  // It seems that some kind of optimisation is 
+  // executed by the compiler
   if (high) {
     PORTB |= (1 << 3);
   }
@@ -35,25 +28,41 @@ void setPin11(bool high) {
     PORTB &= ~(1 << 3);
   }
 }
-
-<<<<<<< HEAD
 // Aufgabe 2
-void setPin11Asm( const bool high) {
-   asm volatile (
-    "start:"
-    "cp %2, %3\n\t"
-    "rjmp %3\n\t"
-    "sbi %0, %1\n\t"
-    "cbi %0, %1\n\t"
-    "rjmp start\n\t"
-    :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3), "I" (high), "I" (1)
-   );
-  
-=======
-void setPin11Asm(boolean high);
+void setPin11Asm(bool high) {
+ // for 10000 iterations of toggling between true/false it takes 8 milliseconds
+ if (high) {
+      asm volatile (
+        "sbi %0, %1\n\t"
+        :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3)
+        );
+    }
+    else {
+      asm volatile (
+        "cbi %0, %1\n\t"
+        :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3));
+    }
+}
+/*void __attribute__((optimize("O0"))) setPin11Asm(bool high) {
+  // for 10000 iterations of toggling between true/false it takes 109.0 milliseconds
+  // that is way worse than the optimized variation above (8 milliseconds).
+    if (high) {
+      asm volatile (
+        "sbi %0, %1\n\t"
+        :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3)
+        );
+    }
+    else {
+      asm volatile (
+        "cbi %0, %1\n\t"
+        :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3));
+    }
+}*/
 
 void setup() {
   // put your setup code here, to run once:
+  pinMode(11,OUTPUT);
+  lcd.begin(NUM_CHAR, NUM_LINES);
   c = 0;
   double start_Asm = millis();
   
@@ -78,14 +87,13 @@ void setup() {
   double start_BuiltIn = millis();
   
   while (c < 100,000) {
-    pinMode(11,LOW);
-    pinMode(11,HIGH);
+    analogWrite(11,LOW);
+    analogWrite(11,HIGH);
     c++;
   }
   double end_BuiltIn = millis();
   double dur_BuiltIn = end_BuiltIn - start_BuiltIn;
 
-  lcd.begin(NUM_CHAR, NUM_LINES);
   lcd.setCursor(0,0);
   lcd.print("With Assembly: ");
   lcd.setCursor(0,16);
@@ -98,14 +106,7 @@ void setup() {
   lcd.print("Built-In: ");
   lcd.setCursor(2,11);
   lcd.print(dur_BuiltIn);
->>>>>>> 68c239a9932c15ce085026c5bc3941e1fd53e2b3
 }
-
 void loop() {
   // put your main code here, to run repeatedly:
-<<<<<<< HEAD
-  setPin11Asm(false);
-=======
-
->>>>>>> 68c239a9932c15ce085026c5bc3941e1fd53e2b3
-}
+  }
