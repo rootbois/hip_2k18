@@ -1,6 +1,10 @@
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(3, 4, 6, 7, 8, 9);
+
 void setup() {
   // put your setup code here, to run once:
   pinMode(11, OUTPUT);
+  lcd.begin(2, 8);
 }
 
 // Aufgabe 1
@@ -14,11 +18,20 @@ void setPin11(bool high) {
 }
 
 // Aufgabe 2
-void setPin11Asm(bool high) {
+void setPin11Asm( const bool high) {
+   asm volatile (
+    "start:"
+    "cp %2, %3\n\t"
+    "rjmp %3\n\t"
+    "sbi %0, %1\n\t"
+    "cbi %0, %1\n\t"
+    "rjmp start\n\t"
+    :: "I" (_SFR_IO_ADDR(PORTB)), "I" (PORTB3), "I" (high), "I" (1)
+   );
   
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  setPin11Asm(false);
 }
