@@ -1,0 +1,62 @@
+Aufgabe 1
+=============
+
+Aufgabe 1(a)
+-------------
+
+In count(a) fehlt ein zweiter Schritt (siehe Doc-Kommentar) (-0.5 P). Dein Code 
+funktioniert, aber durch die vielen, verschachtelten Schleifen ist die Laufzeit
+zu hoch (-1.0 P). Auch die Verwendung von del ist teuer und sollte nur mit 
+äußerster Vorsicht benutzt werden.
+
+>> 3.5 / 5.0 Punkte(n)
+
+Aufgabe 1(b)
+-------------
+
+Nicht bearbeitet.
+
+>> 0.0 / 5.0 Punkte(n)
+
+Aufgabe 2
+=============
+
+Es fehlen die Attribute Tail und Length, wodurch Du nicht wirklich eine DLL um-
+setzt bzw. append, get_length und get_last unnötigerweise in O(n) laufen (-2.0 P).
+Bei insert_after müsste tmp.next.previous auf new_element gesetzt werden und es
+gibt Probleme, wenn current das letzte Element der Liste ist (-1.0 P). Da current
+bereits übergeben wird, brauchst Du nicht die Liste danach zu durchsuchen.
+
+>> 7.0 / 10.0 Punkte(n)
+
+
+Du hast 10.5 von 20.0 Punkten erreicht.
+
+Wenn es Fragen zur Korrektur (Punktabzüge usw.) oder generelle Rückfragen gibt, 
+dann schreib' einfach eine Mail.
+
+Sebastian <hollers@informatik.uni-freiburg.de>
+===============================================================================
+
+Commit-Logs:
+------------------------------------------------------------------------
+r1677 | mn181 | 2018-05-13 20:19:50 +0200 (So, 13. Mai 2018) | 1 Zeile
+
+Radix file change
+------------------------------------------------------------------------
+r1676 | mn181 | 2018-05-13 20:18:56 +0200 (So, 13. Mai 2018) | 1 Zeile
+
+Radix file change
+------------------------------------------------------------------------
+r1674 | mn181 | 2018-05-13 20:17:44 +0200 (So, 13. Mai 2018) | 1 Zeile
+
+Radix file change
+------------------------------------------------------------------------
+r1672 | mn181 | 2018-05-13 20:15:03 +0200 (So, 13. Mai 2018) | 1 Zeile
+
+erfahrungen.txt
+------------------------------------------------------------------------
+r1671 | mn181 | 2018-05-13 20:10:55 +0200 (So, 13. Mai 2018) | 1 Zeile
+
+style changes
+------------------------------------------------------------------------
